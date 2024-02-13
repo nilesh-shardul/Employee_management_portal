@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		$('#btn').click(function(){
+			
+			var jsonfile = JSON.stringify({
+				"firstname" : $("#firstname").val(), 
+				"lastname" : $("#lastname").val(),
+				"email" : $("#email").val()				
+				});
+				
+				console.log(jsonfile);
+				
+				var ans = $.ajax({
+					type : 'POST',
+					url : "http://localhost:8080/myproject/rest/employee/add",
+					dataType : 'json',
+					contentType : 'application/json',
+					data : jsonfile
+				});
+				
+				ans.done(function(data){
+					$("#1").show();
+					$("#2").show();
+					$("#3").show();
+				});
+				
+				ans.fail(function() {
+					  alert( "Request failed: " );
+					  $("#1").show();
+						$("#2").show();
+						$("#3").show();
+				});
+		})
+		
+		
+	});
+
+</script>
+
+<script>
+       $(function(){
+             $("#includedContent").load("hostname_file.html"); 
+       });
+</script>
+
+<body>
+<div id="includedContent"></div>
+<div style="padding-left: 70px;" class="container-fluid">
+<br>
+<div class="row">
+	<div>
+		<h2 style="padding-left: 100px;">Employee Management System </h2>
+		<h3 style="padding-left: 250px;color:green;">
+			Add Employee Record
+		</h3>
+	</div>
+</div>
+<div style="padding-left: 150px;" class="row">
+	<span class="col-md-offset-2 col-md-2">
+		<b> First Name :</b> <input id="firstname" type="text">
+	</span>
+	
+	<span class="col-md-2"> 
+		<b> Last Name : </b><input id="lastname" type="text">
+	</span>
+	
+	<span class="col-md-2"> 
+		<b> Email : </b><input id="email" type="text">
+	</span>
+	
+</div>
+<br>
+<div style="padding-left: 150px;" class="row">
+	<div class="col-md-offset-3 col-md-4">
+		<button id="btn" type="button" class="btn btn-default"> Add Employee </button>
+	</div>	
+</div>
+<br>
+<div style="padding-left: 120px;" class="row">
+	<div class="col-md-offset-3 col-md-4">
+		<h4><span  id="1" hidden="hidden">ID </span>
+		<span style="color:green" id="2"></span>
+		<span id="3" hidden="hidden">is successfully added.</span></h4>
+	</div>
+</div>
+</div>
+</body>
+</html>
